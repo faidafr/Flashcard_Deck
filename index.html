@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flashcards</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="storage.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Flashcards</h1>
+    </header>
+
+    <div class="app-layout">
+      <aside aria-labelledby="decks-heading">
+        <h2 id="decks-heading">Decks</h2>
+        <button id="create-deck" type="button">New deck</button>
+        <nav id="deck-navigation" aria-label="Flashcard decks">
+          <ul id="deck-list"></ul>
+        </nav>
+        <div id="deck-empty-state" class="empty-state empty-state--compact" aria-live="polite" hidden>
+          <span class="empty-state-icon" aria-hidden="true">▱</span>
+          <h3>No decks yet</h3>
+          <p>Create a deck to organize your flashcards.</p>
+        </div>
+      </aside>
+
+      <main>
+        <section id="card-browser-view" aria-labelledby="cards-heading">
+          <div class="section-heading">
+            <h2 id="cards-heading">Cards in <span id="active-deck-name"></span></h2>
+            <div class="card-browser-actions">
+              <button id="start-study" type="button" disabled>Study this deck</button>
+              <button id="create-card" type="button" disabled>New card</button>
+            </div>
+          </div>
+          <div class="card-search-row">
+            <label class="card-search" for="card-search">
+              Search cards
+              <input id="card-search" type="search" autocomplete="off" disabled>
+            </label>
+            <p id="card-match-count" role="status" aria-live="polite">0 matches</p>
+          </div>
+          <div id="card-empty-state" class="empty-state" hidden>
+            <span id="card-empty-icon" class="empty-state-icon" aria-hidden="true">▤</span>
+            <h3 id="card-empty-heading">No cards yet</h3>
+            <p id="card-empty-description">Add a card to get started.</p>
+            <button id="clear-card-search" type="button" hidden>Clear search</button>
+          </div>
+          <div class="card-grid" id="card-list"></div>
+        </section>
+
+        <section id="study-view" aria-labelledby="study-heading" hidden>
+          <div class="study-heading">
+            <div>
+              <h2 id="study-heading" tabindex="-1" aria-describedby="study-shortcuts">Study mode</h2>
+              <p id="study-counter" aria-live="polite"></p>
+            </div>
+            <button id="exit-study" type="button">Exit study mode</button>
+          </div>
+          <article class="study-card" id="study-card" aria-live="polite" aria-atomic="true">
+            <p class="study-side-label" id="study-front-label">Question</p>
+            <p id="study-front"></p>
+            <p class="study-side-label" id="study-back-label" hidden>Answer</p>
+            <p id="study-back" hidden></p>
+          </article>
+          <div class="study-controls">
+            <button id="study-previous" type="button">Previous</button>
+            <button id="study-flip" type="button" aria-pressed="false">Show answer</button>
+            <button id="study-next" type="button">Next</button>
+          </div>
+          <p class="study-help" id="study-shortcuts">Use left/right arrows to navigate, Space to flip, and Escape to exit.</p>
+        </section>
+      </main>
+    </div>
+
+    <dialog
+      class="modal-dialog"
+      id="deck-dialog"
+      aria-labelledby="deck-dialog-heading"
+    >
+      <div class="modal-content">
+        <h2 id="deck-dialog-heading">Create deck</h2>
+        <form id="deck-form">
+          <label for="deck-name">Deck name</label>
+          <input id="deck-name" name="deck-name" maxlength="80" required>
+          <div class="modal-actions">
+            <button id="cancel-deck" type="button">Cancel</button>
+            <button type="submit">Save deck</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog
+      class="modal-dialog"
+      id="card-dialog"
+      aria-labelledby="card-dialog-heading"
+    >
+      <div class="modal-content">
+        <h2 id="card-dialog-heading">Add card</h2>
+        <form id="card-form">
+          <label for="card-front">Front</label>
+          <textarea id="card-front" name="card-front" maxlength="500" required></textarea>
+          <label for="card-back">Back</label>
+          <textarea id="card-back" name="card-back" maxlength="500" required></textarea>
+          <div class="modal-actions">
+            <button id="cancel-card" type="button">Cancel</button>
+            <button type="submit">Save card</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <footer>
+      <p>Flashcards app</p>
+    </footer>
+  </body>
+</html>
